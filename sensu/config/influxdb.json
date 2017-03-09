@@ -1,0 +1,7 @@
+{
+  "influxdb": {
+    "database": "metrics",
+    "host": "localhost",
+    "port": "8086"
+  }
+}
