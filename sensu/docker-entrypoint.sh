@@ -23,6 +23,8 @@ if [ "$1" = "server" ]; then
   exec /opt/sensu/bin/sensu-server -c /etc/sensu/config.json -d /etc/sensu -e /etc/sensu/extensions -v
 elif [ "$1" = "api" ]; then
   exec /opt/sensu/bin/sensu-api -c /etc/sensu/config.json -d /etc/sensu -e /etc/sensu/extensions -v
+elif [ "$1" = "client" ]; then
+  exec /opt/sensu/bin/sensu-client -c /etc/sensu/config.json -d /etc/sensu -e /etc/sensu/extensions -v
 fi
 
 exec "$@"

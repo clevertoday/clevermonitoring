@@ -71,6 +71,18 @@ services:
       restart_policy:
         condition: on-failure
 
+  sensu-client:
+    build: ./sensu
+    image: clevertodayinc/sensu
+    command: client
+    environment:
+      - "REDIS_HOST=redis"
+    depends_on:
+      - redis
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   sensu-api:
     build: ./sensu
     image: clevertodayinc/sensu
