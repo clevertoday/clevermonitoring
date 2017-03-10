@@ -10,11 +10,17 @@ services:
       - INFLUXDB_GRAPHITE_ENABLED=true
     ports:
       - "2003:2003"
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   elasticsearch:
     image: elasticsearch:2.3
     volumes:
-     - "es_data:/usr/share/elasticsearch/data"
+      - "es_data:/usr/share/elasticsearch/data"
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   grafana:
     image: grafana/grafana:4.1.2
@@ -24,6 +30,9 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=Gr4f4n4
     depends_on:
       - elasticsearch
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   kibana:
     image: kibana:5
@@ -31,6 +40,9 @@ services:
      - ELASTICSEARCH_URL=http://elasticsearch:9200
     depends_on:
       - elasticsearch
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   logstash:
     image: logstash:2.3
@@ -41,9 +53,13 @@ services:
       - "12201:12201/udp"
     depends_on:
       - elasticsearch
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   sensu-server:
     build: ./sensu
+    image: clevertodayinc/sensu
     command: server
     environment:
       - "REDIS_HOST=redis"
@@ -51,29 +67,44 @@ services:
     depends_on:
       - influx
       - redis
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   sensu-api:
     build: ./sensu
+    image: clevertodayinc/sensu
     command: api
     environment:
       - "REDIS_HOST=redis"
     depends_on:
       - redis
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   uchiwa:
     build: ./uchiwa
+    image: clevertodayinc/uchiwa
     environment:
       - "SENSU_HOST=sensu-api"
       - "UCHIWA_USERNAME=uchiwa"
       - "UCHIWA_PASSWORD=S4suk3"
     depends_on:
       - sensu-api
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   redis:
     image: redis:3
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   web:
     build: ./proxy
+    image: clevertodayinc/clevermonitoring-proxy
     ports:
       - "80:80"
       - "443:443"
@@ -86,6 +117,9 @@ services:
       - elasticsearch
       - influx
       - uchiwa
+    deploy:
+      restart_policy:
+        condition: on-failure
 
 volumes:
   influx_data:
