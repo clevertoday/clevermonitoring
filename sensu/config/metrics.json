@@ -1,0 +1,130 @@
+{
+  "checks": {
+    "ping": {
+      "type": "check",
+      "command": "check-ping.rb -h google.com",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["mailer"]
+    },
+    "httpjson": {
+      "type": "check",
+      "command": "check-http-json.rb -u http://ip-api.com/json",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["mailer"]
+    },
+    "http": {
+      "type": "check",
+      "command": "check-http.rb -u https://www.bing.com/",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["mailer"]
+    },
+    "ports": {
+      "type": "check",
+      "command": "check-ports.rb -H google.com -p 80",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["mailer"]
+    },
+    "ssl": {
+      "type": "check",
+      "command": "check-ssl-host.rb -h google.com",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["mailer"]
+    },
+    "cpu": {
+      "type": "metric",
+      "command": "metrics-cpu.rb",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    },
+    "diskcapacity": {
+      "type": "metric",
+      "command": "metrics-disk-capacity.rb",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    },
+    "diskusage": {
+      "type": "metric",
+      "command": "metrics-disk-usage.rb",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    },
+    "disk": {
+      "type": "metric",
+      "command": "metrics-disk.rb",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    },
+    "load": {
+      "type": "metric",
+      "command": "metrics-load.rb",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    },
+    "memorypercent": {
+      "type": "metric",
+      "command": "metrics-memory-percent.rb",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    },
+    "memory": {
+      "type": "metric",
+      "command": "metrics-memory.rb",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    },
+    "diskcapacity": {
+      "type": "metric",
+      "command": "metrics-disk-capacity.rb",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    },
+    "process": {
+      "type": "metric",
+      "command": "metrics-process-status.rb -u root",
+      "interval": 10,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    }
+  }
+}

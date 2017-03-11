@@ -1,8 +1,12 @@
 {
   "handlers": {
-    "metrics": {
-      "type": "set",
-      "handlers": [ "influxdb" ]
+    "influxdb": {
+      "type": "udp",
+      "mutator": "influxdb_line_protocol",
+      "socket": {
+        "host": "localhost",
+        "port": 8090
+      }
     }
   }
 }

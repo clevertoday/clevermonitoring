@@ -3,7 +3,8 @@ version: '3.1'
 services:
 
   influx:
-    image: influxdb:1.2
+    build: ./influxdb
+    image: clevertodayinc/influxdb
     volumes:
       - "influx_data:/var/lib/influxdb"
     environment:
@@ -61,6 +62,9 @@ services:
     build: ./sensu
     image: clevertodayinc/sensu
     command: server
+    volumes:
+      - "sensu_config:/conf.d"
+      - "sensu_plugins:/plugins"
     environment:
       - "REDIS_HOST=redis"
       - "INFLUXDB_HOST=influx"
@@ -139,4 +143,8 @@ volumes:
   es_data:
     driver: local
   grafana_data:
+    driver: local
+  sensu_config:
+    driver: local
+  sensu_plugins:
     driver: local
