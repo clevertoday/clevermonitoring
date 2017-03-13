@@ -118,6 +118,13 @@ services:
       restart_policy:
         condition: on-failure
 
+  wpscan:
+    build: ./wpscan
+    image: clevertodayinc/wpscan-server
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   web:
     build: ./proxy
     image: clevertodayinc/clevermonitoring-proxy

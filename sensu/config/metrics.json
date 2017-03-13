@@ -3,7 +3,7 @@
     "ping": {
       "type": "check",
       "command": "check-ping.rb -h google.com",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -12,7 +12,7 @@
     "httpjson": {
       "type": "check",
       "command": "check-http-json.rb -u http://ip-api.com/json",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -21,7 +21,7 @@
     "http": {
       "type": "check",
       "command": "check-http.rb -u https://www.bing.com/",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -30,7 +30,7 @@
     "ports": {
       "type": "check",
       "command": "check-ports.rb -H google.com -p 80",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -39,7 +39,7 @@
     "ssl": {
       "type": "check",
       "command": "check-ssl-host.rb -h google.com",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -48,7 +48,7 @@
     "cpu": {
       "type": "metric",
       "command": "metrics-cpu.rb",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -57,7 +57,7 @@
     "diskcapacity": {
       "type": "metric",
       "command": "metrics-disk-capacity.rb",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -66,7 +66,7 @@
     "diskusage": {
       "type": "metric",
       "command": "metrics-disk-usage.rb",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -75,7 +75,7 @@
     "disk": {
       "type": "metric",
       "command": "metrics-disk.rb",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -84,7 +84,7 @@
     "load": {
       "type": "metric",
       "command": "metrics-load.rb",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -93,7 +93,7 @@
     "memorypercent": {
       "type": "metric",
       "command": "metrics-memory-percent.rb",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -102,7 +102,7 @@
     "memory": {
       "type": "metric",
       "command": "metrics-memory.rb",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -111,7 +111,7 @@
     "diskcapacity": {
       "type": "metric",
       "command": "metrics-disk-capacity.rb",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
@@ -120,11 +120,20 @@
     "process": {
       "type": "metric",
       "command": "metrics-process-status.rb -u root",
-      "interval": 10,
+      "interval": 60,
       "subscribers": [
         "monitoring"
       ],
       "handlers": ["influxdb"]
+    },
+    "wpscan": {
+      "type": "check",
+      "command": "check-wpscan.rb -u http://blog.us.playstation.com/",
+      "interval": 60,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["mailer"]
     }
   }
 }

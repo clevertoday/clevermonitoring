@@ -1,0 +1,6 @@
+{
+  "wpscan": {
+    "host": "wpscan",
+    "port": 8080
+  }
+}
