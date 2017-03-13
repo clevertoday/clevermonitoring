@@ -5,7 +5,7 @@ set -e
 function setConfiguration() {
   KEY=$1
   VALUE=$2
-  sed -i "s/{{$KEY}}/$VALUE/g" /etc/nginx/nginx.conf
+  sed -i "s/{{$KEY}}/$VALUE/g" /etc/nginx/nginx.conf.template
 }
 
 
@@ -60,12 +60,8 @@ else
   setConfiguration "UCHIWA_PORT" "3000"
 fi
 
-
-if [[ "$1" == -* ]]; then
-    set -- /usr/sbin/nginx "$@"
-elif [ -z "$1" ]; then
-    exec /usr/sbin/nginx
+if [ -z "$1" ]; then
+  exec /setup-ssl.sh
 fi
-
 
 exec "$@"

@@ -140,6 +140,8 @@ services:
       - elasticsearch
       - influx
       - uchiwa
+    environment:
+      - "DOMAIN=demo-monitoring.clevertoday.xyz"
     deploy:
       restart_policy:
         condition: on-failure
