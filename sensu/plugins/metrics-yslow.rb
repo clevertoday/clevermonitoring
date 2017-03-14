@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-#   check-yslow
+#   metrics-yslow
 #
 # DESCRIPTION:
 #
@@ -22,15 +22,15 @@
 #   for details.
 #
 
-require 'sensu-plugin/check/cli'
+require 'sensu-plugin/metric/cli'
 require 'sensu-plugin/utils'
 require 'net/http'
 require 'json'
 
 #
-# Check YSlow
+# YSlow Graphite
 #
-class CheckYslow < Sensu::Plugin::Check::CLI
+class YslowMetrics < Sensu::Plugin::Metric::CLI::Graphite
 
   include Sensu::Plugin::Utils
 
@@ -46,24 +46,11 @@ class CheckYslow < Sensu::Plugin::Check::CLI
          description: 'Set the timeout',
          default: 60
 
-  option :overall,
-         short: '-o SCORE',
-         long: '--overall SCORE'
-
-  option :no404,
-         long: '--no404 SCORE'
-
-  option :emptysrc,
-         long: '--emptysrc SCORE'
-
-  option :compress,
-         long: '--compress SCORE'
-
-  option :minify,
-         long: '--minify SCORE'
-
-  option :imgnoscale,
-         long: '--imgnoscale SCORE'
+  option :scheme,
+         description: 'Metric naming scheme, text to prepend to metric',
+         short: '-s SCHEME',
+         long: '--scheme SCHEME',
+         default: "#{Socket.gethostname}.yslow"
 
   def run
     if config[:url] && settings["yslow"]
@@ -103,38 +90,17 @@ class CheckYslow < Sensu::Plugin::Check::CLI
     case res.code
     when /^2/
       report = JSON.parse(res.body)
-      results = process_report report
-      if results.empty?
-        ok
-      else
-        warning "YSlow thresholds reached: #{results}"
-      end
+      process_report report
     else
       critical "Status #{res.code}: #{res.body}"
     end
   end
 
   def process_report report
-    results = Array.new
-    if config[:overall]
-      results.push("Overall score is lower than #{config[:overall]}") if report["o"] < config[:overall].to_i
+    output "#{config[:scheme]}.overall", report["o"]
+    report["g"].each do |key, value|
+      output "#{config[:scheme]}.#{key}", value["score"]
     end
-    if config[:no404]
-      results.push("No 404 score is lower than #{config[:no404]}") if report["g"]["yno404"]["score"] < config[:no404].to_i
-    end
-    if config[:emptysrc]
-      results.push("Empty src score is lower than #{config[:emptysrc]}") if report["g"]["yemptysrc"]["score"] < config[:emptysrc].to_i
-    end
-    if config[:compress]
-      results.push("Compress score is lower than #{config[:compress]}") if report["g"]["ycompress"]["score"] < config[:compress].to_i
-    end
-    if config[:minify]
-      results.push("Minifiy score is lower than #{config[:minify]}") if report["g"]["yminify"]["score"] < config[:minify].to_i
-    end
-    if config[:imgnoscale]
-      results.push("No scale score is lower than #{config[:imgnoscale]}") if report["g"]["yimgnoscale"]["score"] < config[:imgnoscale].to_i
-    end
-    results
   end
 
 end

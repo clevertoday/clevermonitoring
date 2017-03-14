@@ -160,6 +160,10 @@ services:
   arachni:
     build: ./arachni
     image: clevertodayinc/arachni-server
+    depends_on:
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
