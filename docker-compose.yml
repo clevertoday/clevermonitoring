@@ -157,6 +157,13 @@ services:
       restart_policy:
         condition: on-failure
 
+  arachni:
+    build: ./arachni
+    image: clevertodayinc/arachni-server
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   yslow:
     build: ./yslow
     image: clevertodayinc/yslow-server
