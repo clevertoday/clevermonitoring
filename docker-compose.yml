@@ -132,6 +132,13 @@ services:
       restart_policy:
         condition: on-failure
 
+  yslow:
+    build: ./yslow
+    image: clevertodayinc/yslow-server
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   web:
     build: ./proxy
     image: clevertodayinc/clevermonitoring-proxy

@@ -135,6 +135,15 @@
       ],
       "handlers": ["mailer"]
     },
+    "yslow": {
+      "type": "check",
+      "command": "check-yslow.rb -u https://www.devmcgill.com/ -o 75 --no404 100 --emptysrc 100 --compress 85 --minify 85 --imgnoscale 100",
+      "interval": 60,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["mailer"]
+    },
     "nginx": {
       "type": "metric",
       "command": "metrics-nginx.rb -u http://web/nginx_status",

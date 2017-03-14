@@ -1,0 +1,6 @@
+{
+  "yslow": {
+    "host": "yslow",
+    "port": 8080
+  }
+}
