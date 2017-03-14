@@ -11,12 +11,18 @@ services:
       - INFLUXDB_GRAPHITE_ENABLED=true
     ports:
       - "2003:2003"
+    depends_on:
+      - logstash
+    logging: &logging
+      driver: "gelf"
+      options:
+        gelf-address: "udp://localhost:12201"
     deploy:
       restart_policy:
         condition: on-failure
 
   elasticsearch:
-    image: elasticsearch:2.3
+    image: elasticsearch:5-alpine
     volumes:
       - "es_data:/usr/share/elasticsearch/data"
     deploy:
@@ -31,6 +37,9 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=Gr4f4n4
     depends_on:
       - elasticsearch
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
@@ -41,12 +50,15 @@ services:
      - ELASTICSEARCH_URL=http://elasticsearch:9200
     depends_on:
       - elasticsearch
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
 
   logstash:
-    image: logstash:2.3
+    image: logstash:5-alpine
     command: >
       -e "input { gelf { type => docker port => 12201 } } output { elasticsearch { hosts => 'elasticsearch' }}"
     ports:
@@ -71,6 +83,9 @@ services:
     depends_on:
       - influx
       - redis
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
@@ -83,6 +98,9 @@ services:
       - "REDIS_HOST=redis"
     depends_on:
       - redis
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
@@ -95,6 +113,9 @@ services:
       - "REDIS_HOST=redis"
     depends_on:
       - redis
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
@@ -108,12 +129,19 @@ services:
       - "UCHIWA_PASSWORD=S4suk3"
     depends_on:
       - sensu-api
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
 
   redis:
-    image: redis:3
+    image: redis:3-alpine
+    depends_on:
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
@@ -121,6 +149,10 @@ services:
   wpscan:
     build: ./wpscan
     image: clevertodayinc/wpscan-server
+    depends_on:
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
@@ -128,6 +160,10 @@ services:
   yslow:
     build: ./yslow
     image: clevertodayinc/yslow-server
+    depends_on:
+      - logstash
+    logging:
+      <<: *logging
     deploy:
       restart_policy:
         condition: on-failure
@@ -135,6 +171,10 @@ services:
   web:
     build: ./proxy
     image: clevertodayinc/clevermonitoring-proxy
+    depends_on:
+      - logstash
+    logging:
+      <<: *logging
     ports:
       - "80:80"
       - "443:443"
