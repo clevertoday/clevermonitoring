@@ -142,7 +142,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["mailer"]
+      "handlers": ["influxdb"]
     }
   }
 }
