@@ -21,7 +21,7 @@ function startPenTest(url) {
       '--checks=xss,common_admin_interfaces,insecure_cross_domain_policy_access,insecure_cookies,password_autocomplete,unencrypted_password_forms,insecure_cors_policy,emails,html_objects,credit_card,sql_injection,file_inclusion,code_injection',
       '--scope-exclude-binaries',
       '--scope-directory-depth-limit=10',   // Default infinite
-      '--scope-page-limit=75',              // Default infinite
+      '--scope-page-limit=5',              // Default infinite
       '--output-only-positives',
       '--audit-links',
       '--audit-cookies',
@@ -116,6 +116,7 @@ app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
   console.log('Received request');
+  req.setTimeout(0);
   const url = req.body.url;
 
   if (url) {

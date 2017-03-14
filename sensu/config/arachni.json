@@ -1,0 +1,6 @@
+{
+  "arachni": {
+    "host": "arachni",
+    "port": 3000
+  }
+}

@@ -125,6 +125,13 @@ services:
       restart_policy:
         condition: on-failure
 
+  arachni:
+    build: ./arachni
+    image: clevertodayinc/arachni-server
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   web:
     build: ./proxy
     image: clevertodayinc/clevermonitoring-proxy
