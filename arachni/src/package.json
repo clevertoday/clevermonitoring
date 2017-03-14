@@ -1,0 +1,13 @@
+{
+  "name": "arachni-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "xml-to-json": "^0.1.1"
+  }
+}
