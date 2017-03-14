@@ -128,7 +128,7 @@
     },
     "wpscan": {
       "type": "check",
-      "command": "check-wpscan.rb -u http://blog.us.playstation.com/",
+      "command": "check-wpscan.rb -u https://www.clevertoday.com/",
       "interval": 60,
       "subscribers": [
         "monitoring"
