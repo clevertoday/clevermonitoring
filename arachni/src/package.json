@@ -8,6 +8,6 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "xml-to-json": "^0.1.1"
+    "xml-parser": "^1.2.1"
   }
 }

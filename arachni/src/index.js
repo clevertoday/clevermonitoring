@@ -6,19 +6,34 @@ const bodyParser = require('body-parser')
 const app = express();
 const sys = require('util')
 const spawn = require('child_process').spawn;
-const xml2json = require('xml-to-json')
+const parseXML = require('xml-parser');
 
 const arachni = '/arachni-1.5-0.5.11/bin/arachni';
 const arachniReporter = '/arachni-1.5-0.5.11/bin/arachni_reporter';
+
+const arachniChecks = [
+  'xss',
+  'insecure_cross_domain_policy_access',
+  'insecure_cookies',
+  'password_autocomplete',
+  'unencrypted_password_forms',
+  'insecure_cors_policy',
+  'emails',
+  'html_objects',
+  'credit_card',
+  'sql_injection',
+  'file_inclusion',
+  'code_injection'
+];
 
 function startPenTest(url) {
   return new Promise((resolve, reject) => {
     console.log(`Starting scan of ${url}`);
 
-    const reportName = Date.now() + '_' + url.replace('://', '');
+    const reportName = Date.now() + '_' + url.replace('://', '').replace('/', '');
     const args = [
       url,
-      '--checks=xss,common_admin_interfaces,insecure_cross_domain_policy_access,insecure_cookies,password_autocomplete,unencrypted_password_forms,insecure_cors_policy,emails,html_objects,credit_card,sql_injection,file_inclusion,code_injection',
+      '--checks=' + arachniChecks.join(),
       '--scope-exclude-binaries',
       '--scope-directory-depth-limit=10',   // Default infinite
       '--scope-page-limit=5',              // Default infinite
@@ -89,27 +104,56 @@ function generateXmlReport(reportName) {
 
 function convertReportToJson(reportName) {
   return new Promise((resolve, reject) => {
-    xml2json({
-      input: `/reports/${reportName}.xml`,
-      output: null
-    }, (err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        if (result.report && result.report.issues && typeof result.report.issues !== 'string') {
-          result.report.issues = result.report.issues.map(issue => {
-            return Object.assign({}, issue, {
-              page: undefined,
-              response: Object.assign({}, issue.response, {
-                body: undefined
-              })
-            });
-          });
-        }
-        resolve(result);
-      }
+    const xmlReport = fs.readFileSync(`/reports/${reportName}.xml`);
+    const report = parseXML(xmlReport.toString());
+
+    const rawIssues = report.root.children.filter(child => {
+      return child.name === 'issues';
     });
+    let issues = [];
+    if (rawIssues[0]) {
+      issues = rawIssues[0].children.map(issue => {
+        return convertIssue(issue); 
+      });
+    }
+
+    const rawSitemap = report.root.children.filter(child => {
+      return child.name === 'sitemap';
+    });
+
+    let sitemap = [];
+    if (rawSitemap[0]) {
+      sitemap = rawSitemap[0].children.map(entry => {
+        return entry.attributes;
+      });
+    }
+
+    resolve({ issues, sitemap });
   });
+}
+
+function convertIssue(rawIssue) {
+  let issue = {};
+  const attributesToKeep = [
+    'name',
+    'description',
+    'remedy_guidance',
+    'remedy_code',
+    'severity',
+    'cwe',
+    'digest',
+    'signature',
+    'proof',
+    'trusted'
+  ];
+
+  rawIssue.children.forEach(child => {
+    if (attributesToKeep.indexOf(child.name) > -1) {
+      issue[child.name] = child.content;
+    }
+  });
+
+  return issue;
 }
 
 app.use(bodyParser.json()); 
@@ -128,7 +172,8 @@ app.post('/', (req, res) => {
       res.send(report);
     }).catch(err => {
       res.status(500);
-      res.send(err);
+      console.error('Error while scanning', err);
+      res.send(JSON.stringify(err));
     });
   } else {
     res.status(400);
