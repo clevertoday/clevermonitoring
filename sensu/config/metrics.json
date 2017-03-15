@@ -146,13 +146,13 @@
       "handlers": ["mailer"]
     },
     "yslow": {
-      "type": "check",
-      "command": "check-yslow.rb -u https://www.devmcgill.com/ -o 75 --no404 100 --emptysrc 100 --compress 85 --minify 85 --imgnoscale 100",
+      "type": "metric",
+      "command": "metrics-yslow.rb -u https://www.devmcgill.com/",
       "interval": 60,
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["mailer"]
+      "handlers": ["influxdb"]
     },
     "nginx": {
       "type": "metric",
