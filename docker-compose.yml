@@ -25,6 +25,8 @@ services:
     image: elasticsearch:5-alpine
     volumes:
       - "es_data:/usr/share/elasticsearch/data"
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     deploy:
       restart_policy:
         condition: on-failure
