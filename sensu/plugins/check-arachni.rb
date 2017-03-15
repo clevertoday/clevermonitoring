@@ -80,16 +80,16 @@ class CheckArachni < Sensu::Plugin::Check::CLI
     when /^2/
       result = JSON.parse(res.body)
 
-      if result["report"]["issues"].kind_of?(Array)
-        criticals = result["report"]["issues"].select{ |issue| issue.severity.eql? "high" }
+      if result["issues"].kind_of?(Array)
+        criticals = result["issues"].select{ |issue| issue["severity"].eql? "high" }
 
         unless criticals.empty?
           warning("Vulnerabilities detected: #{criticals}")
         else
-          ok("No vulnerabilities detected")
+          ok("No vulnerabilitie detected")
         end
       else
-        ok("No vulnerabilities detected")
+        ok("No vulnerabilitie detected")
       end
     else
       critical("Status #{res.code}: #{res.body}")

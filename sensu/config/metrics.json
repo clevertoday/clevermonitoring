@@ -135,6 +135,16 @@
       ],
       "handlers": ["mailer"]
     },
+    "arachni": {
+      "type": "check",
+      "command": "check-wpscan.rb -u https://www.clevertoday.com/",
+      "interval": 7200,
+      "timeout": 14400,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["mailer"]
+    },
     "yslow": {
       "type": "metric",
       "command": "metrics-yslow.rb -u https://www.devmcgill.com/",
