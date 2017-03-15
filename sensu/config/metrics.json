@@ -137,7 +137,7 @@
     },
     "arachni": {
       "type": "check",
-      "command": "check-wpscan.rb -u https://www.clevertoday.com/",
+      "command": "check-arachni.rb -u https://www.clevertoday.com/",
       "interval": 7200,
       "timeout": 14400,
       "subscribers": [
