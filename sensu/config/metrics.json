@@ -117,6 +117,15 @@
       ],
       "handlers": ["influxdb"]
     },
+    "interface": {
+      "type": "metric",
+      "command": "metrics-interface.rb",
+      "interval": 60,
+      "subscribers": [
+        "monitoring"
+      ],
+      "handlers": ["influxdb"]
+    },
     "process": {
       "type": "metric",
       "command": "metrics-process-status.rb -u root",
