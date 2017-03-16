@@ -16,7 +16,7 @@ if [ -n "${REDIS_HOST+1}" ]; then
   setConfiguration "localhost" "$REDIS_HOST" $CONFIGURATION_FILE
 fi
 
-CONFIGURATION_FILE="/etc/sensu/conf.d/handlers.json"
+CONFIGURATION_FILE="/etc/sensu/conf.d/influxdb_handler.json"
 if [ -n "${INFLUXDB_HOST+1}" ]; then
   setConfiguration "localhost" "$INFLUXDB_HOST" $CONFIGURATION_FILE
 fi
