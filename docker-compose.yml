@@ -96,6 +96,7 @@ services:
     build: ./sensu
     image: clevertodayinc/sensu
     command: client
+    hostname: monitoring-agent
     environment:
       - "REDIS_HOST=redis"
     depends_on:

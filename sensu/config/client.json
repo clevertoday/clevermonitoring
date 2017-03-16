@@ -2,6 +2,6 @@
   "client": {
     "name": "monitoring",
     "address": "localhost",
-    "subscriptions": [ "monitoring" ]
+    "subscriptions": [ "monitoring", "linux", "nginx" ]
   }
 }
