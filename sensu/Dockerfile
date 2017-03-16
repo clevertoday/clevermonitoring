@@ -9,7 +9,7 @@ RUN         apt-get -y update && apt-get install -y apt-transport-https rsync wg
             apt-get -y update && apt-get install -y sensu
 
 RUN         apt-get -y update && apt-get install -y ruby ruby-dev build-essential zlib1g-dev && \
-            gem install mail json sensu-plugin net-ping inifile sys-proctable em-http-request nokogiri nori rest-client --no-ri --no-rdoc
+            gem install mail erubis json sensu-plugin net-ping inifile sys-proctable em-http-request nokogiri nori rest-client --no-ri --no-rdoc
 
 VOLUME      /conf.d
 VOLUME      /plugins
