@@ -21,6 +21,19 @@ services:
       restart_policy:
         condition: on-failure
 
+  influxgraph:
+    build: ./influxgraph
+    image: clevertodayinc/influxgraph
+    environment:
+      - INFLUXDB_HOST=influx
+    depends_on:
+      - logstash
+    logging: 
+      <<: *logging
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   elasticsearch:
     image: elasticsearch:5-alpine
     volumes:
@@ -76,12 +89,10 @@ services:
     build: ./sensu
     image: clevertodayinc/sensu
     command: server
-    volumes:
-      - "sensu_config:/conf.d"
-      - "sensu_plugins:/plugins"
     environment:
       - "REDIS_HOST=redis"
       - "INFLUXDB_HOST=influx"
+      - "GRAPHITE_HOST=influx"
     depends_on:
       - influx
       - redis
@@ -202,7 +213,7 @@ services:
       - influx
       - uchiwa
     environment:
-      - "DOMAIN=demo-monitoring.clevertoday.xyz"
+      - "DOMAIN=${DOMAIN}"
     deploy:
       restart_policy:
         condition: on-failure
@@ -213,8 +224,4 @@ volumes:
   es_data:
     driver: local
   grafana_data:
-    driver: local
-  sensu_config:
-    driver: local
-  sensu_plugins:
     driver: local

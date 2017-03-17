@@ -52,7 +52,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "diskcapacity": {
       "type": "metric",
@@ -61,7 +61,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "diskusage": {
       "type": "metric",
@@ -70,7 +70,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "disk": {
       "type": "metric",
@@ -79,7 +79,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "load": {
       "type": "metric",
@@ -88,7 +88,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "memorypercent": {
       "type": "metric",
@@ -97,7 +97,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "memory": {
       "type": "metric",
@@ -106,7 +106,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "diskcapacity": {
       "type": "metric",
@@ -115,7 +115,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "interface": {
       "type": "metric",
@@ -124,7 +124,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "process": {
       "type": "metric",
@@ -133,7 +133,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "wpscan": {
       "type": "check",
@@ -161,7 +161,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     },
     "nginx": {
       "type": "metric",
@@ -170,7 +170,7 @@
       "subscribers": [
         "monitoring"
       ],
-      "handlers": ["influxdb"]
+      "handlers": ["graphite"]
     }
   }
 }

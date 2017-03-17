@@ -21,6 +21,11 @@ if [ -n "${INFLUXDB_HOST+1}" ]; then
   setConfiguration "localhost" "$INFLUXDB_HOST" $CONFIGURATION_FILE
 fi
 
+CONFIGURATION_FILE="/etc/sensu/conf.d/graphite_handler.json"
+if [ -n "${GRAPHITE_HOST+1}" ]; then
+  setConfiguration "localhost" "$GRAPHITE_HOST" $CONFIGURATION_FILE
+fi
+
 if [ -d "/conf.d" ]; then
   rsync -avh --progress /conf.d $SENSU_CONFIG
 fi
