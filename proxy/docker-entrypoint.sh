@@ -5,7 +5,7 @@ set -e
 function setConfiguration() {
   KEY=$1
   VALUE=$2
-  sed -i "s/{{$KEY}}/$VALUE/g" /etc/nginx/nginx.conf.template
+  sed -i "s/{{$KEY}}/$VALUE/g" /etc/nginx/nginx.conf
 }
 
 
