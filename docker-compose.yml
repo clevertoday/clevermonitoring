@@ -4,7 +4,7 @@ services:
 
   influx:
     build: ./influxdb
-    image: clevertodayinc/influxdb
+    image: clevertodayinc/influxdb:${BUILD_NUMBER}
     volumes:
       - "influx_data:/var/lib/influxdb"
     environment:
@@ -23,7 +23,7 @@ services:
 
   influxgraph:
     build: ./influxgraph
-    image: clevertodayinc/influxgraph
+    image: clevertodayinc/influxgraph:${BUILD_NUMBER}
     environment:
       - INFLUXDB_HOST=influx
     depends_on:
@@ -87,7 +87,7 @@ services:
 
   sensu-server:
     build: ./sensu
-    image: clevertodayinc/sensu
+    image: clevertodayinc/sensu:${BUILD_NUMBER}
     command: server
     environment:
       - "REDIS_HOST=redis"
@@ -105,7 +105,7 @@ services:
 
   sensu-client:
     build: ./sensu
-    image: clevertodayinc/sensu
+    image: clevertodayinc/sensu:${BUILD_NUMBER}
     command: client
     hostname: monitoring-agent
     environment:
@@ -121,7 +121,7 @@ services:
 
   sensu-api:
     build: ./sensu
-    image: clevertodayinc/sensu
+    image: clevertodayinc/sensu:${BUILD_NUMBER}
     command: api
     environment:
       - "REDIS_HOST=redis"
@@ -136,7 +136,7 @@ services:
 
   uchiwa:
     build: ./uchiwa
-    image: clevertodayinc/uchiwa
+    image: clevertodayinc/uchiwa:${BUILD_NUMBER}
     environment:
       - "SENSU_HOST=sensu-api"
       - "UCHIWA_USERNAME=uchiwa"
@@ -162,7 +162,7 @@ services:
 
   wpscan:
     build: ./wpscan
-    image: clevertodayinc/wpscan-server
+    image: clevertodayinc/wpscan-server:${BUILD_NUMBER}
     depends_on:
       - logstash
     logging:
@@ -173,7 +173,7 @@ services:
 
   arachni:
     build: ./arachni
-    image: clevertodayinc/arachni-server
+    image: clevertodayinc/arachni-server:${BUILD_NUMBER}
     depends_on:
       - logstash
     logging:
@@ -184,7 +184,7 @@ services:
 
   yslow:
     build: ./yslow
-    image: clevertodayinc/yslow-server
+    image: clevertodayinc/yslow-server:${BUILD_NUMBER}
     depends_on:
       - logstash
     logging:
@@ -195,7 +195,7 @@ services:
 
   web:
     build: ./proxy
-    image: clevertodayinc/clevermonitoring-proxy
+    image: clevertodayinc/clevermonitoring-proxy:${BUILD_NUMBER}
     depends_on:
       - logstash
     logging:
