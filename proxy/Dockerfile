@@ -1,4 +1,4 @@
-FROM 				clevertodayinc/clever-nginx:8
+FROM 				clevertodayinc/clever-nginx:9
 MAINTAINER 	Brice Argenson <brice@clevertoday.com>
 
 COPY        docker-entrypoint.sh  /entrypoint.sh
