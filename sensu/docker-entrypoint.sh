@@ -43,6 +43,10 @@ if [ "$1" = "server" ]; then
 elif [ "$1" = "api" ]; then
   exec /opt/sensu/bin/sensu-api -c /etc/sensu/config.json -d /etc/sensu -e /etc/sensu/extensions -v
 elif [ "$1" = "client" ]; then
+  CONFIGURATION_FILE=/etc/sensu/conf.d/client.json
+  if [ -n "${CLIENT_CONFIG+1}" ]; then
+    echo $CLIENT_CONFIG > $CONFIGURATION_FILE
+  fi
   exec /opt/sensu/bin/sensu-client -c /etc/sensu/config.json -d /etc/sensu -e /etc/sensu/extensions -v
 fi
 
