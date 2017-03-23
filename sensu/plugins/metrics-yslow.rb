@@ -101,6 +101,7 @@ class YslowMetrics < Sensu::Plugin::Metric::CLI::Graphite
     report["g"].each do |key, value|
       output "#{config[:scheme]}.#{key}", value["score"]
     end
+    ok
   end
 
 end
