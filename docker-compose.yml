@@ -214,6 +214,8 @@ services:
       - uchiwa
     environment:
       - "DOMAIN=${DOMAIN}"
+    volumes:
+      - tls_proxy:/etc/letsencrypt
     deploy:
       restart_policy:
         condition: on-failure
@@ -224,4 +226,6 @@ volumes:
   es_data:
     driver: local
   grafana_data:
+    driver: local
+  tls_proxy:
     driver: local
