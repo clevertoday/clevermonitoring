@@ -45,7 +45,7 @@ services:
         condition: on-failure
 
   grafana:
-    image: grafana/grafana:4.1.2
+    image: grafana/grafana:4.4.3
     volumes:
       - "grafana_data:/var/lib/grafana"
     environment:

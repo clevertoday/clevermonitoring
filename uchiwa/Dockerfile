@@ -1,4 +1,4 @@
-FROM        uchiwa/uchiwa:0.22.1
+FROM        uchiwa/uchiwa:0.25.3-1
 MAINTAINER  Brice Argenson <brice@clevertoday.com>
 
 COPY        config.json   /config/config.json
