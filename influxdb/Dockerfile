@@ -1,4 +1,4 @@
-FROM        influxdb:1.3-alpine
+FROM        influxdb:1.2-alpine
 MAINTAINER  Brice Argenson <brice@clevertoday.com>
 
 COPY        influxdb.conf  /etc/influxdb/influxdb.conf
