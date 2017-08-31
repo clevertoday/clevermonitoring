@@ -2,5 +2,3 @@ finders:
   - influxgraph.InfluxDBFinder
 influxdb:
   host: {{INFLUXDB_HOST}}
-  memcache:
-    host: localhost
