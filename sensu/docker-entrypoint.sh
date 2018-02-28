@@ -47,7 +47,7 @@ elif [ "$1" = "client" ]; then
   if [ -n "${CLIENT_CONFIG+1}" ]; then
     echo $CLIENT_CONFIG > $CONFIGURATION_FILE
   fi
-  rm -rf /etc/sensu/conf.d/metric*
+  rm -rf /etc/sensu/conf.d/*metrics*
   exec /opt/sensu/bin/sensu-client -c /etc/sensu/config.json -d /etc/sensu -e /etc/sensu/extensions -v
 fi
 
