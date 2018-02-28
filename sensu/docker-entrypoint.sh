@@ -27,6 +27,7 @@ if [ -n "${GRAPHITE_HOST+1}" ]; then
 fi
 
 if [ -d "/conf.d" ]; then
+  rm -rf /etc/sensu/conf.d/*metrics*
   rsync -avh --progress /conf.d $SENSU_CONFIG
 fi
 
@@ -47,7 +48,7 @@ elif [ "$1" = "client" ]; then
   if [ -n "${CLIENT_CONFIG+1}" ]; then
     echo $CLIENT_CONFIG > $CONFIGURATION_FILE
   fi
-  rm -rf /etc/sensu/conf.d/*metrics*
+  rm -rf /etc/sensu/conf.d/metric*
   exec /opt/sensu/bin/sensu-client -c /etc/sensu/config.json -d /etc/sensu -e /etc/sensu/extensions -v
 fi
 
